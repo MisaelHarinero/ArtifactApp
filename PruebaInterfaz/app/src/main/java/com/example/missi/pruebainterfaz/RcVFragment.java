@@ -4,9 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 
 /**
@@ -26,7 +30,8 @@ public class RcVFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private ArrayList<Carta>cartas;
+    private RecyclerView recycler;
     private OnFragmentInteractionListener mListener;
 
     public RcVFragment() {
@@ -63,8 +68,18 @@ public class RcVFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_rc_v, container, false);
+        this.recycler = view.findViewById(R.id.recycler);
+        this.recycler.setHasFixedSize(true);
+        RecyclerView.LayoutManager manager = new GridLayoutManager(view.getContext(),3);
+        this.recycler.setLayoutManager(manager);
+        MyAdapter myAdapter = new MyAdapter(cartas);
+        this.recycler.setAdapter(myAdapter);
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_rc_v, container, false);
+        return view;
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -72,6 +87,14 @@ public class RcVFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    public ArrayList<Carta> getCartas() {
+        return cartas;
+    }
+
+    public void setCartas(ArrayList<Carta> cartas) {
+        this.cartas = cartas;
     }
 
     @Override
