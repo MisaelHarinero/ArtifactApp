@@ -34,7 +34,7 @@ public class FragmentNotice extends Fragment {
     private String mParam1;
     private String mParam2;
     private ListView list;
-    private ArrayList<Heroes>heroes;
+    private ArrayList<Heroe>heroes;
 
     private OnFragmentInteractionListener mListener;
 
@@ -95,7 +95,7 @@ public class FragmentNotice extends Fragment {
             public View getView(int position, View convertView, ViewGroup parent) {
                 LayoutInflater layoutInflater = getLayoutInflater();
                 convertView = inflater.inflate(R.layout.list_view_layout,parent,false);
-                Heroes hero = heroes.get(position);
+                Heroe hero = heroes.get(position);
                 ImageView cardImage = convertView.findViewById(R.id.cardImage);
                 TextView nameHeroe = convertView.findViewById(R.id.textName);
                 TextView damage = convertView.findViewById(R.id.atackText);
@@ -137,11 +137,11 @@ public class FragmentNotice extends Fragment {
         return view;
     }
 
-    public ArrayList<Heroes> getHeroes() {
+    public ArrayList<Heroe> getHeroes() {
         return heroes;
     }
 
-    public void setHeroes(ArrayList<Heroes> heroes) {
+    public void setHeroes(ArrayList<Heroe> heroes) {
         this.heroes = heroes;
     }
 

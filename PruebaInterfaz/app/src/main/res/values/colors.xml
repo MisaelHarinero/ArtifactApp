@@ -10,4 +10,5 @@
     <color name="back_red">#8f2e2d</color>
     <color name="back_black">#3b2f2e</color>
     <color name="back_blue">#315b86</color>
+    <color name="real_transparent">#00ffffff</color>
 </resources>

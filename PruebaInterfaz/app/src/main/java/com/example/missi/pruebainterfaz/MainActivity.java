@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,8 +18,8 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, FragmentNotice.OnFragmentInteractionListener {
-    private ArrayList<Heroes>heroes;
+        implements NavigationView.OnNavigationItemSelectedListener, FragmentNotice.OnFragmentInteractionListener, RcVFragment.OnFragmentInteractionListener {
+    private ArrayList<Carta>heroes;
     private String filter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +93,9 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.mainView,fragmentNotice).commit();
 
         } else if (id == R.id.nav_gallery) {
+            RcVFragment fragment = new RcVFragment();
+            fragment.setCartas(heroes);
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainView,fragment).commit();
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -110,22 +112,22 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
     public ArrayList generarHeroes(){
-        ArrayList<Heroes> heroes = new ArrayList<>();
-        heroes.add(new Heroes("Abadon",4,0,9,"Green","BORROWED TIME",R.drawable.abaddon));
-        heroes.add(new Heroes("Axe",7,2,11,"Red","BERSERKER CALL",R.drawable.axe));
-        heroes.add(new Heroes("Beastmaster",5,0,12,"Red","CALL OF THE WILD",R.drawable.beastmaster));
-        heroes.add(new Heroes("Bloodseeker",7,0,6,"Black","BLOOD BATH",R.drawable.bloodseeker));
-        heroes.add(new Heroes("Bounty Hunter",7,0,7,"Black","JINADA",R.drawable.bounty_hunter));
-        heroes.add(new Heroes("Bristleback",8,0,12,"Red","BARROOM BRAWLER",R.drawable.bristleback));
-        heroes.add(new Heroes("Centaur Warrunner",4,0,14,"Red","RETURN",R.drawable.centaur_warrunner));
-        heroes.add(new Heroes("Chen",4,0,9,"Green","HOLY PERSUASION",R.drawable.chen));
-        heroes.add(new Heroes("Crystal Maiden",2,0,5,"Blue","ARCANE AURA",R.drawable.crystal_maiden));
-        heroes.add(new Heroes("Dark Seer",5,0,9,"Green","SURGE",R.drawable.dark_seer));
-        heroes.add(new Heroes("Debbi the Cunning",7,0,5,"Black","METICULOUS PLANNER",R.drawable.debbi));
-        heroes.add(new Heroes("Drow Ranger",4,0,7,"Green","PRECISION AURA",R.drawable.drow_ranger));
-        heroes.add(new Heroes("Earthshaker",2,0,7,"Blue","FISSURE",R.drawable.earthshaker));
-        heroes.add(new Heroes("Echantress",4,0,8,"Green","NATURE'S ATTEND",R.drawable.enchantress));
-        heroes.add(new Heroes("Farvhan the Dreamer",4,0,10,"Green","PACK LEADERSHIP",R.drawable.farvhan));
+        ArrayList<Heroe> heroes = new ArrayList<>();
+        heroes.add(new Heroe("Abadon",4,0,9,"Green","BORROWED TIME",R.drawable.abaddon));
+        heroes.add(new Heroe("Axe",7,2,11,"Red","BERSERKER CALL",R.drawable.axe));
+        heroes.add(new Heroe("Beastmaster",5,0,12,"Red","CALL OF THE WILD",R.drawable.beastmaster));
+        heroes.add(new Heroe("Bloodseeker",7,0,6,"Black","BLOOD BATH",R.drawable.bloodseeker));
+        heroes.add(new Heroe("Bounty Hunter",7,0,7,"Black","JINADA",R.drawable.bounty_hunter));
+        heroes.add(new Heroe("Bristleback",8,0,12,"Red","BARROOM BRAWLER",R.drawable.bristleback));
+        heroes.add(new Heroe("Centaur Warrunner",4,0,14,"Red","RETURN",R.drawable.centaur_warrunner));
+        heroes.add(new Heroe("Chen",4,0,9,"Green","HOLY PERSUASION",R.drawable.chen));
+        heroes.add(new Heroe("Crystal Maiden",2,0,5,"Blue","ARCANE AURA",R.drawable.crystal_maiden));
+        heroes.add(new Heroe("Dark Seer",5,0,9,"Green","SURGE",R.drawable.dark_seer));
+        heroes.add(new Heroe("Debbi the Cunning",7,0,5,"Black","METICULOUS PLANNER",R.drawable.debbi));
+        heroes.add(new Heroe("Drow Ranger",4,0,7,"Green","PRECISION AURA",R.drawable.drow_ranger));
+        heroes.add(new Heroe("Earthshaker",2,0,7,"Blue","FISSURE",R.drawable.earthshaker));
+        heroes.add(new Heroe("Echantress",4,0,8,"Green","NATURE'S ATTEND",R.drawable.enchantress));
+        heroes.add(new Heroe("Farvhan the Dreamer",4,0,10,"Green","PACK LEADERSHIP",R.drawable.farvhan));
 
 
 
@@ -143,7 +145,7 @@ public class MainActivity extends AppCompatActivity
                 filter = colors[which];
                 if (filter != null ){
                     System.out.println("Hola");
-                    ArrayList<Heroes>heroes = heroesWithFilter(filter);
+                    ArrayList<Heroe>heroes = heroesWithFilter(filter);
                     FragmentNotice fragmentNotice = new FragmentNotice();
                     fragmentNotice.setHeroes(heroes);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainView,fragmentNotice).commit();
@@ -157,11 +159,11 @@ public class MainActivity extends AppCompatActivity
 
 
     }
-    public ArrayList<Heroes> heroesWithFilter(String filter){
-        ArrayList<Heroes> heroes = new ArrayList<>();
+    public ArrayList<Heroe> heroesWithFilter(String filter){
+        ArrayList<Heroe> heroes = new ArrayList<>();
         for (int i = 0; i <this.heroes.size() ; i++) {
             if (this.heroes.get(i).getColor().equals(filter)){
-                heroes.add(this.heroes.get(i));
+                heroes.add((Heroe) this.heroes.get(i));
             }
         }
         return heroes;
