@@ -32,6 +32,7 @@ public class RcVFragment extends Fragment {
     private String mParam2;
     private ArrayList<Carta>cartas;
     private RecyclerView recycler;
+    private MainActivity mainActivity;
     private OnFragmentInteractionListener mListener;
 
     public RcVFragment() {
@@ -65,6 +66,14 @@ public class RcVFragment extends Fragment {
         }
     }
 
+    public MainActivity getMainActivity() {
+        return mainActivity;
+    }
+
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,7 +82,7 @@ public class RcVFragment extends Fragment {
         this.recycler.setHasFixedSize(true);
         RecyclerView.LayoutManager manager = new GridLayoutManager(view.getContext(),3);
         this.recycler.setLayoutManager(manager);
-        MyAdapter myAdapter = new MyAdapter(cartas);
+        MyAdapter myAdapter = new MyAdapter(cartas,mainActivity);
         this.recycler.setAdapter(myAdapter);
 
 

@@ -16,10 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, FragmentNotice.OnFragmentInteractionListener, RcVFragment.OnFragmentInteractionListener {
-    private ArrayList<Carta>heroes;
+        implements NavigationView.OnNavigationItemSelectedListener, FragmentNotice.OnFragmentInteractionListener, RcVFragment.OnFragmentInteractionListener , FragmentData.OnFragmentInteractionListener{
+    private ArrayList<Carta> cartas;
     private String filter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.heroes = generarHeroes();
+        this.cartas = generarCartas();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         MainFragment fragment = new MainFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.mainView,fragment);
+        getSupportFragmentManager().beginTransaction().add(R.id.mainView,fragment).commit();
     }
 
     @Override
@@ -89,15 +91,18 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             FragmentNotice fragmentNotice = new FragmentNotice();
-            fragmentNotice.setHeroes(generarHeroes());
+            fragmentNotice.setHeroes(getHeroes());
             getSupportFragmentManager().beginTransaction().replace(R.id.mainView,fragmentNotice).commit();
 
         } else if (id == R.id.nav_gallery) {
             RcVFragment fragment = new RcVFragment();
-            fragment.setCartas(heroes);
+            fragment.setCartas(cartas);
+            fragment.setMainActivity(this);
             getSupportFragmentManager().beginTransaction().replace(R.id.mainView,fragment).commit();
 
         } else if (id == R.id.nav_slideshow) {
+            MainFragment fragment = new MainFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainView,fragment).commit();
 
         } else if (id == R.id.nav_manage) {
 
@@ -111,27 +116,28 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public ArrayList generarHeroes(){
-        ArrayList<Heroe> heroes = new ArrayList<>();
-        heroes.add(new Heroe("Abadon",4,0,9,"Green","BORROWED TIME",R.drawable.abaddon));
-        heroes.add(new Heroe("Axe",7,2,11,"Red","BERSERKER CALL",R.drawable.axe));
-        heroes.add(new Heroe("Beastmaster",5,0,12,"Red","CALL OF THE WILD",R.drawable.beastmaster));
-        heroes.add(new Heroe("Bloodseeker",7,0,6,"Black","BLOOD BATH",R.drawable.bloodseeker));
-        heroes.add(new Heroe("Bounty Hunter",7,0,7,"Black","JINADA",R.drawable.bounty_hunter));
-        heroes.add(new Heroe("Bristleback",8,0,12,"Red","BARROOM BRAWLER",R.drawable.bristleback));
-        heroes.add(new Heroe("Centaur Warrunner",4,0,14,"Red","RETURN",R.drawable.centaur_warrunner));
-        heroes.add(new Heroe("Chen",4,0,9,"Green","HOLY PERSUASION",R.drawable.chen));
-        heroes.add(new Heroe("Crystal Maiden",2,0,5,"Blue","ARCANE AURA",R.drawable.crystal_maiden));
-        heroes.add(new Heroe("Dark Seer",5,0,9,"Green","SURGE",R.drawable.dark_seer));
-        heroes.add(new Heroe("Debbi the Cunning",7,0,5,"Black","METICULOUS PLANNER",R.drawable.debbi));
-        heroes.add(new Heroe("Drow Ranger",4,0,7,"Green","PRECISION AURA",R.drawable.drow_ranger));
-        heroes.add(new Heroe("Earthshaker",2,0,7,"Blue","FISSURE",R.drawable.earthshaker));
-        heroes.add(new Heroe("Echantress",4,0,8,"Green","NATURE'S ATTEND",R.drawable.enchantress));
-        heroes.add(new Heroe("Farvhan the Dreamer",4,0,10,"Green","PACK LEADERSHIP",R.drawable.farvhan));
-
-
-
-        return  heroes;
+    public ArrayList generarCartas(){
+        ArrayList<Carta> cartasLista = new ArrayList<>();
+        cartasLista.add(new Heroe("Abadon",4,0,9,"Green","BORROWED TIME",R.drawable.abaddon));
+        cartasLista.add(new Heroe("Axe",7,2,11,"Red","BERSERKER CALL",R.drawable.axe));
+        cartasLista.add(new Heroe("Beastmaster",5,0,12,"Red","CALL OF THE WILD",R.drawable.beastmaster));
+        cartasLista.add(new Heroe("Bloodseeker",7,0,6,"Black","BLOOD BATH",R.drawable.bloodseeker));
+        cartasLista.add(new Heroe("Bounty Hunter",7,0,7,"Black","JINADA",R.drawable.bounty_hunter));
+        cartasLista.add(new Heroe("Bristleback",8,0,12,"Red","BARROOM BRAWLER",R.drawable.bristleback));
+        cartasLista.add(new Heroe("Centaur Warrunner",4,0,14,"Red","RETURN",R.drawable.centaur_warrunner));
+        cartasLista.add(new Heroe("Chen",4,0,9,"Green","HOLY PERSUASION",R.drawable.chen));
+        cartasLista.add(new Heroe("Crystal Maiden",2,0,5,"Blue","ARCANE AURA",R.drawable.crystal_maiden));
+        cartasLista.add(new Heroe("Dark Seer",5,0,9,"Green","SURGE",R.drawable.dark_seer));
+        cartasLista.add(new Heroe("Debbi the Cunning",7,0,5,"Black","METICULOUS PLANNER",R.drawable.debbi));
+        cartasLista.add(new Heroe("Drow Ranger",4,0,7,"Green","PRECISION AURA",R.drawable.drow_ranger));
+        cartasLista.add(new Heroe("Earthshaker",2,0,7,"Blue","FISSURE",R.drawable.earthshaker));
+        cartasLista.add(new Heroe("Echantress",4,0,8,"Green","NATURE'S ATTEND",R.drawable.enchantress));
+        cartasLista.add(new Heroe("Farvhan the Dreamer",4,0,10,"Green","PACK LEADERSHIP",R.drawable.farvhan));
+        cartasLista.add(new Spell("Bolt of Damocles",R.drawable.bolt_of_damocles,"Blue",10,"Deal 20 damage to the enemy tower"));
+        cartasLista.add(new Spell("Act of Defiance",R.drawable.act_of_defiance,"Green",5,"Silence a unit this round"));
+        cartasLista.add(new Spell("Allseeing One's Favor",R.drawable.allseeing_ones_favor,"Green",5,"Silence a unit this round"));
+        Collections.sort(cartasLista);
+        return  cartasLista;
     }
     public void dialog(){
         final String colors [] = {"Black","Red","Blue","Green"};
@@ -161,12 +167,29 @@ public class MainActivity extends AppCompatActivity
     }
     public ArrayList<Heroe> heroesWithFilter(String filter){
         ArrayList<Heroe> heroes = new ArrayList<>();
-        for (int i = 0; i <this.heroes.size() ; i++) {
-            if (this.heroes.get(i).getColor().equals(filter)){
-                heroes.add((Heroe) this.heroes.get(i));
+        for (int i = 0; i <this.cartas.size() ; i++) {
+            if (this.cartas.get(i).getColor().equals(filter)){
+                heroes.add((Heroe) this.cartas.get(i));
             }
         }
         return heroes;
+    }
+    public ArrayList<Heroe>getHeroes(){
+                ArrayList<Heroe> heroes = new ArrayList<>();
+        for (int i = 0; i <this.cartas.size(); i++) {
+            if (this.cartas.get(i).getClass() == Heroe.class){
+                heroes.add((Heroe) this.cartas.get(i));
+            }
+        }
+
+
+
+        return heroes;
+    }
+    public   void cargarFrament(Carta carta){
+        FragmentData fragmentData = new FragmentData();
+        fragmentData.setCarta(carta);
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainView,fragmentData).commit();
     }
     @Override
     public void onFragmentInteraction(Uri uri) {

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         private ArrayList<Carta>cartas;
+        private MainActivity mainActivity;
     public static class  MyViewHolder extends  RecyclerView.ViewHolder{
         private ImageButton button;
 
@@ -22,8 +23,9 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     }
 
-    public MyAdapter(ArrayList<Carta> cartas) {
+    public MyAdapter(ArrayList<Carta> cartas, MainActivity mainActivity) {
         this.cartas = cartas;
+        this.mainActivity = mainActivity;
     }
 
     @NonNull
@@ -35,9 +37,15 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, final int i) {
 
             myViewHolder.button.setImageResource(this.cartas.get(i).getId_img());
+            myViewHolder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mainActivity.cargarFrament(cartas.get(i));
+                }
+            });
 
     }
 

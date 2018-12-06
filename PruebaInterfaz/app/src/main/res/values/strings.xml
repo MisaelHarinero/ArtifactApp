@@ -13,4 +13,7 @@
     <string name="armor">ARMOR</string>
     <string name="health">HEALTH</string>
     <string name="skill">SKILL- </string>
+    <string name="type">CARD TYPE</string>
+    <string name="cost">COST</string>
+    <string name="card_color">COLOR</string>
 </resources>
